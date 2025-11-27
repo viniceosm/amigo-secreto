@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Criar Grupo — Amigo Secreto</title>
+
+  <style>
+    body {
+      font-family: system-ui;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #386c6f;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background: #264a4c;
+    }
+    .box {
+      padding: 20px;
+      border-radius: 10px;
+      background: #f7f7f7;
+      margin-top: 15px;
+    }
+  </style>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // ---- CONFIG DO FIREBASE ----
+    const firebaseConfig = {
+    apiKey: "AIzaSyC-cFYCg-FVzZhiMEc717-DMXuQhxkB2QU",
+    authDomain: "amigo-secreto-507c4.firebaseapp.com",
+    projectId: "amigo-secreto-507c4",
+    storageBucket: "amigo-secreto-507c4.firebasestorage.app",
+    messagingSenderId: "539794082236",
+    appId: "1:539794082236:web:53afca3ca22ff91ae203b9",
+    measurementId: "G-ME72EK5R76"
+   };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function criarGrupo() {
+      const nomeGrupo = document.getElementById("grupo").value.trim();
+      const lista = document.getElementById("participantes").value.trim();
+
+      if (!nomeGrupo || !lista) {
+        alert("Preencha o nome do grupo e os participantes.");
+        return;
+      }
+
+      const linhas = lista.split("\n")
+                          .map(l => l.trim())
+                          .filter(l => l.length > 0);
+
+      const quantidade = linhas.length;
+
+      const docRef = await addDoc(collection(db, "amigo_grupos"), {
+        nome: nomeGrupo,
+        participantes: linhas,
+        quantidade: quantidade,
+        revelados: 0,
+        criadoEm: new Date().toISOString()
+      });
+
+      document.getElementById("resultado").innerHTML = `
+        <div class="box">
+          <b>Grupo criado com sucesso!</b><br>
+          ID do grupo:<br>
+          <code>${docRef.id}</code>
+        </div>
+      `;
+    }
+
+    window.criarGrupo = criarGrupo;
+  </script>
+
+</head>
+<body>
+
+  <h1>🎄 Criar Grupo – Amigo Secreto</h1>
+
+  <label>Nome do Grupo</label>
+  <input id="grupo" placeholder="Amigo Secreto Soares 2025">
+
+  <label>Participantes (um por linha)</label>
+  <textarea id="participantes" rows="8" placeholder="Vini&#10;Cris&#10;Pedro&#10;Marcelo"></textarea>
+
+  <button onclick="criarGrupo()">Criar Grupo</button>
+
+  <div id="resultado"></div>
+
+</body>
+</html>
