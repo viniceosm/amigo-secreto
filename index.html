@@ -2,39 +2,105 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Criar Grupo — Amigo Secreto</title>
 
   <style>
-    body {
-      font-family: system-ui;
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 20px;
-    }
-    input, textarea, button {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      font-size: 15px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-    button {
-      background: #386c6f;
-      color: white;
-      cursor: pointer;
-      border: none;
-    }
-    button:hover {
-      background: #264a4c;
-    }
-    .box {
-      padding: 20px;
-      border-radius: 10px;
-      background: #f7f7f7;
-      margin-top: 15px;
-    }
-  </style>
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui;
+    background: linear-gradient(#cde9ff, #eaf6ff);
+    min-height: 100vh;
+    padding: 20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('https://i.imgur.com/WuYba7E.png'); /* neve suave */
+  }
+
+  .container {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 800;
+    color: #d83939;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 5px rgba(0,0,0,.1);
+  }
+
+  .sub {
+    text-align: center;
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 25px;
+  }
+
+  .card {
+    background: white;
+    padding: 22px;
+    border-radius: 22px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+    margin-bottom: 20px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  .card h3 {
+    margin: 0 0 15px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    outline: none;
+    margin-top: 8px;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    resize: none;
+    height: 120px;
+  }
+
+  button {
+    width: 100%;
+    padding: 15px;
+    background: #2fa75f;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .15);
+    transition: .2s;
+  }
+
+  button:hover {
+    background: #238a4c;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* mobile adjustments */
+  @media (max-width: 420px) {
+    .title { font-size: 30px; }
+    button { font-size: 17px; }
+  }
+
+</style>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -91,18 +157,24 @@
 
 </head>
 <body>
+  <div class="container">
 
-  <h1>🎄 Criar Grupo – Amigo Secreto</h1>
+  <div class="title">🎅 Secret Santa</div>
+  <div class="sub">Crie seu grupo e convide os participantes ❄️</div>
 
-  <label>Nome do Grupo</label>
-  <input id="grupo" placeholder="Amigo Secreto Soares 2025">
+  <div class="card">
+    <h3>Nome do grupo</h3>
+    <input id="grupo" placeholder="Amigo Secreto Soares 2025">
+  </div>
 
-  <label>Participantes (um por linha)</label>
-  <textarea id="participantes" rows="8" placeholder="Vini&#10;Cris&#10;Pedro&#10;Marcelo"></textarea>
+  <div class="card">
+    <h3>Participantes</h3>
+    <textarea id="participantes" placeholder="Vini&#10;Cris&#10;Pedro&#10;Marcelo"></textarea>
+  </div>
 
-  <button onclick="criarGrupo()">Criar Grupo</button>
+  <button onclick="criarGrupo()">Criar grupo 🎄</button>
 
-  <div id="resultado"></div>
+  </div>
 
 </body>
 </html>
