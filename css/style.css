@@ -1,0 +1,12 @@
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui;background:linear-gradient(#cde9ff,#eaf6ff);min-height:100vh;padding:20px;background-image:radial-gradient(circle at 10% 20%,rgba(255,255,255,.9) 2px,transparent 3px),radial-gradient(circle at 80% 10%,rgba(255,255,255,.8) 1.5px,transparent 3px),radial-gradient(circle at 30% 70%,rgba(255,255,255,.85) 2.5px,transparent 3px),radial-gradient(circle at 70% 50%,rgba(255,255,255,.9) 2px,transparent 3px),radial-gradient(circle at 50% 90%,rgba(255,255,255,.75) 1.8px,transparent 3px);background-size:cover}
+.container{max-width:420px;margin:0 auto}
+.title{text-align:center;font-size:34px;font-weight:800;color:#d83939;margin-bottom:10px;text-shadow:0 2px 5px rgba(0,0,0,.1)}
+.sub{text-align:center;font-size:16px;color:#444;margin-bottom:25px}
+.card{background:#fff;padding:22px;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.12);margin-bottom:20px;animation:fadeIn .6s ease}
+.card h3{margin:0 0 15px;font-size:20px;font-weight:600;color:#333}
+input,textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ddd;font-size:16px;outline:none;margin-top:8px;background:#fbfbfb;box-sizing:border-box}
+textarea{resize:none;height:120px}
+button{width:100%;padding:15px;background:#2fa75f;color:#fff;border:none;border-radius:14px;font-size:18px;font-weight:600;margin-top:18px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.15);transition:.2s}
+button:hover{background:#238a4c}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:420px){.title{font-size:30px}button{font-size:17px}}
