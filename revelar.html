@@ -21,7 +21,17 @@
     
         <!-- NOME AQUI, ABAIXO DA CAIXA -->
         <div id="revealName" class="reveal-name" style="display:none"></div>
-    
+    </div>
+
+    <div id="dicaRecebida" class="card" style="display:none; margin-top:20px;">
+      <h3>Dica que seu amigo deixou pra você 🎄</h3>
+      <div id="dicaTextoRecebida"></div>
+    </div>
+
+    <div id="dicaArea" class="card" style="display:none; margin-top:20px;">
+      <h3>Deixe uma dica do presente pra quem for te presentear 🎁</h3>
+      <textarea id="dicaTexto" placeholder="Ex: Eu amo café, filmes e chocolate!"></textarea>
+      <button id="btnSalvarDica">Salvar dica</button>
     </div>
 
     <div id="painelRevelar" class="card" style="display:none">
@@ -40,6 +50,7 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script type="module" src="firebase/firebase-init.js"></script>
 <script type="module" src="js/revelar.js"></script>
+<script type="module" src="js/modal.js"></script>
 
 </body>
 </html>

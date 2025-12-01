@@ -1,6 +1,6 @@
 import { db } from "../firebase/firebase-init.js";
 import {
-  doc, getDoc, updateDoc, collection, query, where, onSnapshot
+  doc, getDoc, updateDoc, collection, query, where, onSnapshot, getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const params = new URLSearchParams(window.location.search);
@@ -64,6 +64,8 @@ async function init() {
 
   const amigo = await decryptAES(dados.masterKey, dados.assigned);
 
+  document.getElementById("dicaArea").style.display = "block";
+
   // Revelar na tela
   revealName.textContent = amigo;
   revealName.style.display = "block";
@@ -74,6 +76,27 @@ async function init() {
       used: true,
       usedAt: new Date().toISOString()
     });
+  }
+
+  if (dados.dica) {
+    document.getElementById("dicaTexto").value = dados.dica;
+  }
+
+  // Busca a dica do amigo revelado
+  const q = query(
+    collection(db, "amigo_links"),
+    where("owner", "==", amigo)
+  );
+
+  const snapDica = await getDocs(q);
+
+  if (!snapDica.empty) {
+    const docDica = snapDica.docs[0].data();
+
+    if (docDica.dica && docDica.dica.trim() !== "") {
+      document.getElementById("dicaTextoRecebida").textContent = docDica.dica;
+      document.getElementById("dicaRecebida").style.display = "block";
+    }
   }
 
   // Exibe caixa animada
@@ -88,6 +111,17 @@ async function init() {
 
   // Atualiza progresso do grupo
   iniciarPainel(dados.groupId);
+
+  document.getElementById("btnSalvarDica").onclick = async () => {
+
+    const texto = document.getElementById("dicaTexto").value.trim();
+  
+    await updateDoc(linkRef, {
+      dica: texto
+    });
+  
+    await showAlert("Dica salva com sucesso! 🎁");
+  };
 }
 
 function iniciarPainel(groupId) {
