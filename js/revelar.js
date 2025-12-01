@@ -76,12 +76,12 @@ async function init() {
       used: true,
       usedAt: new Date().toISOString()
     });
-  }
 
-  // Atualiza o total de revelados do grupo
-  await updateDoc(doc(db, "amigo_grupos", dados.groupId), {
-    revelados: increment(1)
-  });
+    // Atualiza o total de revelados do grupo
+    await updateDoc(doc(db, "amigo_grupos", dados.groupId), {
+      revelados: increment(1)
+    });
+  }
 
   if (dados.dica) {
     document.getElementById("dicaTexto").value = dados.dica;
