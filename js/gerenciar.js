@@ -111,9 +111,13 @@ function iniciarPainelProgresso(groupId, participantes) {
     if (snapshot.empty) {
       btnResetar.style.display = "none";
       btnSortear.style.display = "block";
+
+      document.getElementById("participantesArea").style.display = "block";
     } else {
       btnResetar.style.display = "block";
       btnSortear.style.display = "none";
+
+      document.getElementById("participantesArea").style.display = "none";
     }
 
     const usados = [];

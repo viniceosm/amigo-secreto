@@ -1,6 +1,6 @@
 import { db } from "../firebase/firebase-init.js";
 import {
-  doc, getDoc, updateDoc, collection, query, where, onSnapshot, getDocs
+  doc, getDoc, updateDoc, collection, query, where, onSnapshot, getDocs, increment
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const params = new URLSearchParams(window.location.search);
@@ -77,6 +77,11 @@ async function init() {
       usedAt: new Date().toISOString()
     });
   }
+
+  // Atualiza o total de revelados do grupo
+  await updateDoc(doc(db, "amigo_grupos", dados.groupId), {
+    revelados: increment(1)
+  });
 
   if (dados.dica) {
     document.getElementById("dicaTexto").value = dados.dica;
