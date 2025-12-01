@@ -87,7 +87,6 @@ async function init() {
   btnSortear.style.display = "block";
   btnSortear.addEventListener("click", () => sortear(grupo));
   btnResetar.addEventListener("click", resetarSorteio);
-  console.log("btnExcluirGrupo", btnExcluirGrupo);
 
   iniciarPainelProgresso(groupId, grupo.participantes);
 
@@ -349,6 +348,11 @@ async function excluirGrupo() {
 
   // 2. Apagar o grupo
   await deleteDoc(doc(db, "amigo_grupos", groupId));
+
+  const grupos = loadLocalGroups(); // lista atual
+  const novaLista = grupos.filter(g => g.id !== groupId);
+
+  localStorage.setItem("amigoSecretoGrupos", JSON.stringify(novaLista));
 
   // 3. Avisar e redirecionar
   await showAlert("Grupo excluído com sucesso!");

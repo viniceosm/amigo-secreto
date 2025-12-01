@@ -207,3 +207,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",syst
   text-align: center;
   color: #555;
 }
+
+#btnNovoGrupo {
+  margin-bottom: 15px;
+}

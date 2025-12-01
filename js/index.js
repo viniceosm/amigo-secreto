@@ -58,9 +58,35 @@ async function criarGrupo() {
 // -------- Inicialização da página --------
 const grupos = loadLocalGroups();
 
+// Botão "Criar outro grupo 🎄"
+const btnNovo = document.getElementById("btnNovoGrupo");
+
+btnNovo.addEventListener("click", () => {
+  // reexibir o formulário
+  document.getElementById("formArea").style.display = "block";
+
+  // esconder a área dos grupos
+  document.getElementById("grupoArea").innerHTML = "";
+
+  // esconder o botão novamente
+  btnNovo.style.display = "none";
+
+  // limpar campos
+  document.getElementById("grupo").value = "";
+  document.getElementById("participantes").value = "";
+});
+
+// Lógica atual dos grupos
 if (grupos.length === 1) {
   renderGrupo(grupos[0]);
   document.getElementById("formArea").style.display = "none";
+  btnNovo.style.display = "block"; // <--- mostrar botão
+}
+
+if (grupos.length > 1) {
+  renderLista(grupos);
+  document.getElementById("formArea").style.display = "none";
+  btnNovo.style.display = "block"; // <--- mostrar botão
 }
 
 if (grupos.length > 1) {
