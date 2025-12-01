@@ -104,11 +104,29 @@ function iniciarPainelRevelar(groupId, total) {
 // ANIMAR REVELAÇÃO
 // =========================
 function animarRevelacao(nome) {
-  mensagem.style.opacity = 0;
+  const giftWrapper = document.getElementById("giftBoxWrapper");
+  const giftBox = document.getElementById("giftBox");
+
+  giftWrapper.style.display = "flex"; // mostra a caixa animada
+
+  // Abrir presente após 700ms
+  setTimeout(() => {
+      giftBox.classList.add("open");
+  }, 700);
+
+  // Confetti quando abre
+  setTimeout(() => {
+      confetti({
+        particleCount: 200,
+        spread: 90,
+        origin: { y: 0.2 }
+      });
+  }, 900);
 
   setTimeout(() => {
-    mensagem.innerHTML = `<div class="revealed-name">${nome}</div>`;
-    mensagem.style.opacity = 1;
+    const revealName = document.getElementById("revealName");
+    revealName.textContent = nome;
+    revealName.style.display = "block";
     startConfetti();
   }, 400);
 }

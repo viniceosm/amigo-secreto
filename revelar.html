@@ -11,16 +11,30 @@
   <div class="container">
 
     <h1 class="title">🎁 Seu Amigo Secreto</h1>
-  
-    <div class="card" id="cardMensagem">
-      <div id="mensagem">Carregando...</div>
+
+    <div id="giftBoxWrapper" class="gift-wrapper">
+
+        <div class="giftbox" id="giftBox">
+          <div class="lid"></div>
+          <div class="box"></div>
+        </div>
+    
+        <!-- NOME AQUI, ABAIXO DA CAIXA -->
+        <div id="revealName" class="reveal-name" style="display:none"></div>
+    
     </div>
-  
-    <div id="painelRevelar" class="card" style="margin-top:20px;display:none">
+
+    <div id="painelRevelar" class="card" style="display:none">
       <h3>Progresso do Grupo</h3>
       <div id="infoRevelar"></div>
     </div>
-  
+
+    <!-- Progresso -->
+    <div id="painelRevelar" class="card" style="margin-top:20px; display:none">
+      <h3>Progresso do Grupo</h3>
+      <div id="infoRevelar"></div>
+    </div>
+
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
