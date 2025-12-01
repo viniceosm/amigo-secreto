@@ -202,3 +202,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",syst
 .btn-danger:hover {
   background: #b72828;
 }
+
+.dica-vazia {
+  text-align: center;
+  color: #555;
+}

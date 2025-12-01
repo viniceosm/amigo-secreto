@@ -90,14 +90,34 @@ async function init() {
 
   const snapDica = await getDocs(q);
 
-  if (!snapDica.empty) {
-    const docDica = snapDica.docs[0].data();
+  // ESCUTAR EM TEMPO REAL a dica do amigo revelado
+  onSnapshot(q, (snapDica) => {
+    const divRecebida = document.getElementById("dicaRecebida");
+    const divTexto = document.getElementById("dicaTextoRecebida");
+    const divVazia = document.getElementById("dicaVazia");
 
-    if (docDica.dica && docDica.dica.trim() !== "") {
-      document.getElementById("dicaTextoRecebida").textContent = docDica.dica;
-      document.getElementById("dicaRecebida").style.display = "block";
+    if (snapDica.empty) {
+      divRecebida.style.display = "block";
+      divTexto.style.display = "none";
+      divVazia.style.display = "block";
+      return;
     }
-  }
+
+    const docDica = snapDica.docs[0].data();
+    const dica = docDica.dica ? docDica.dica.trim() : "";
+
+    // Sempre mostrar o bloco
+    divRecebida.style.display = "block";
+
+    if (dica !== "") {
+      divTexto.textContent = dica;
+      divTexto.style.display = "block";
+      divVazia.style.display = "none";
+    } else {
+      divTexto.style.display = "none";
+      divVazia.style.display = "block";
+    }
+  });
 
   // Exibe caixa animada
   giftBoxWrapper.style.display = "flex";
