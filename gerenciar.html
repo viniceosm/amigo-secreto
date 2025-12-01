@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerenciar Grupo 🎄</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1 class="title">🎁 Gerenciar Grupo</h1>
+
+  <div id="painelProgresso" class="card" style="display:none">
+    <h3>Progresso do Grupo</h3>
+    <div id="contador"></div>
+    <div id="listaStatus" style="margin-top:15px"></div>
+  </div>
+
+  <div id="infoGrupo" class="sub"></div>
+
+  <div id="participantesArea" class="card" style="display:none">
+    <h3>Participantes</h3>
+    <ul id="listaParticipantes"></ul>
+  </div>
+
+  <button id="btnSortear" style="display:none">Sortear & Gerar Links 🔐</button>
+
+  <button id="btnResetar" class="btn-resetar">🔄 Resetar Sorteio</button>
+
+  <div id="linksArea" style="display:none" class="card">
+    <h3>Links de Revelação</h3>
+    <div id="linksLista"></div>
+  </div>
+
+</div>
+
+<script type="module" src="firebase/firebase-init.js"></script>
+<script type="module" src="js/gerenciar.js"></script>
+<script type="module" src="js/modal.js"></script>
+
+</body>
+</html>

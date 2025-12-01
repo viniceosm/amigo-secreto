@@ -1,12 +1,179 @@
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui;background:linear-gradient(#cde9ff,#eaf6ff);min-height:100vh;padding:20px;background-image:radial-gradient(circle at 10% 20%,rgba(255,255,255,.9) 2px,transparent 3px),radial-gradient(circle at 80% 10%,rgba(255,255,255,.8) 1.5px,transparent 3px),radial-gradient(circle at 30% 70%,rgba(255,255,255,.85) 2.5px,transparent 3px),radial-gradient(circle at 70% 50%,rgba(255,255,255,.9) 2px,transparent 3px),radial-gradient(circle at 50% 90%,rgba(255,255,255,.75) 1.8px,transparent 3px);background-size:cover}
-.container{max-width:420px;margin:0 auto}
-.title{text-align:center;font-size:34px;font-weight:800;color:#d83939;margin-bottom:10px;text-shadow:0 2px 5px rgba(0,0,0,.1)}
-.sub{text-align:center;font-size:16px;color:#444;margin-bottom:25px}
-.card{background:#fff;padding:22px;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.12);margin-bottom:20px;animation:fadeIn .6s ease}
-.card h3{margin:0 0 15px;font-size:20px;font-weight:600;color:#333}
-input,textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ddd;font-size:16px;outline:none;margin-top:8px;background:#fbfbfb;box-sizing:border-box}
-textarea{resize:none;height:120px}
-button{width:100%;padding:15px;background:#2fa75f;color:#fff;border:none;border-radius:14px;font-size:18px;font-weight:600;margin-top:18px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.15);transition:.2s}
-button:hover{background:#238a4c}
-@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:420px){.title{font-size:30px}button{font-size:17px}}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui;background:linear-gradient(#cde9ff,#eaf6ff);min-height:100vh;padding:20px;background-image:radial-gradient(circle at 10% 20%,rgba(255,255,255,.9) 2px,transparent 3px),radial-gradient(circle at 80% 10%,rgba(255,255,255,.8) 1.5px,transparent 3px),radial-gradient(circle at 30% 70%,rgba(255,255,255,.85) 2.5px,transparent 3px),radial-gradient(circle at 70% 50%,rgba(255,255,255,.9) 2px,transparent 3px),radial-gradient(circle at 50% 90%,rgba(255,255,255,.75) 1.8px,transparent 3px);background-size:cover}.container{max-width:420px;margin:0 auto}.title{text-align:center;font-size:34px;font-weight:800;color:#d83939;margin-bottom:10px;text-shadow:0 2px 5px rgba(0,0,0,.1)}.sub{text-align:center;font-size:16px;color:#444;margin-bottom:25px}.card{background:#fff;padding:22px;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.12);margin-bottom:20px;animation:fadeIn .6s ease}.card h3{margin:0 0 15px;font-size:20px;font-weight:600;color:#333}input,textarea{width:100%;padding:14px;border-radius:14px;border:1px solid #ddd;font-size:16px;outline:none;margin-top:8px;background:#fbfbfb;box-sizing:border-box}textarea{resize:none;height:120px}button{width:100%;padding:15px;background:#2fa75f;color:#fff;border:none;border-radius:14px;font-size:18px;font-weight:600;margin-top:18px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.15);transition:.2s}button:hover{background:#238a4c}.btn-resetar{width:100%;padding:12px 15px;background:#b33939;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;margin-top:15px;margin-bottom:15px;cursor:pointer;transition:.2s;box-shadow:0 4px 12px rgba(0,0,0,.15)}.btn-resetar:hover{background:#8e2c2c}.link-row{display:flex;gap:10px;align-items:center;margin-top:5px}.link-input{flex:1;padding:10px 14px;border-radius:8px;font-size:15px;min-height:42px;box-sizing:border-box;border:1px solid #ccc;background:#fbfbfb}.btn-share{padding:0 12px;min-height:42px;width:42px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:#386c6f;color:#fff;cursor:pointer;border:none;font-size:20px;box-sizing:border-box}.btn-share:hover{background:#264a4c}@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}@media(max-width:420px){.title{font-size:30px}button{font-size:17px}}
+
+/* ===== MODAL OVERLAY ===== */
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    animation:fadeIn .25s ease;
+  }
+  
+  /* ===== MODAL BOX ===== */
+  .modal-box{
+    width:85%;
+    max-width:340px;
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,.18);
+    animation:pop .25s ease;
+  }
+  
+  .modal-box h2{
+    margin:0 0 10px;
+    font-size:22px;
+    font-weight:700;
+    color:#333;
+  }
+  
+  .modal-box p{
+    font-size:16px;
+    color:#444;
+    margin-bottom:22px;
+  }
+  
+  /* ===== BUTTONS ===== */
+  .modal-btn{
+    width:100%;
+    padding:12px;
+    font-size:17px;
+    font-weight:600;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,.12);
+    transition:.2s;
+  }
+  
+  .modal-btn-ok{
+    background:#2fa75f;
+    color:#fff;
+  }
+  
+  .modal-btn-ok:hover{ background:#238a4c; }
+  
+  .modal-btn-cancel{
+    background:#b33939;
+    color:#fff;
+    margin-top:10px;
+  }
+  
+  .modal-btn-cancel:hover{ background:#8e2c2c; }
+  
+  /* ===== ANIMATIONS ===== */
+  @keyframes pop{
+    from{transform:scale(.85);opacity:0}
+    to{transform:scale(1);opacity:1}
+  }
+
+
+  /* container principal do reveal */
+#revealContainer {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+/* Caixa do presente */
+.giftbox {
+  width: 130px;
+  height: 130px;
+  background: #ff4d4d;
+  border-radius: 18px;
+  position: relative;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: wiggle 0.8s ease-in-out infinite;
+}
+
+/* Tampa */
+.giftbox::before {
+  content: "";
+  position: absolute;
+  top: -28px;
+  width: 130px;
+  height: 38px;
+  background: #d32f2f;
+  border-radius: 12px 12px 6px 6px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  transform-origin: bottom center;
+}
+
+/* Fita vertical */
+.giftbox::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 130px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+/* animação de balançar */
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  50% { transform: rotate(-3deg); }
+  75% { transform: rotate(2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Quando abre */
+.giftbox.open {
+  animation: none;
+  transform: scale(1.05);
+}
+
+.giftbox.open::before {
+  transform: translateY(-60px) rotate(-25deg);
+  opacity: 0;
+}
+
+/* Nome revelado */
+#revealName {
+  font-size: 32px;
+  color: #d83939;
+  font-weight: 800;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+/* card de mensagem inicial */
+#cardMensagem {
+  animation: fadeIn 0.6s ease;
+}
+
+/* animação fade */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.revealed-name {
+  font-size: 42px;
+  font-weight: 800;
+  text-align: center;
+  color: #d83939;
+  padding: 28px 20px;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(0,0,0,.10);
+  margin-top: 10px;
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}

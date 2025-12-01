@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revelar Amigo Secreto 🎁</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <h1 class="title">🎁 Seu Amigo Secreto</h1>
+  
+    <div class="card" id="cardMensagem">
+      <div id="mensagem">Carregando...</div>
+    </div>
+  
+    <div id="painelRevelar" class="card" style="margin-top:20px;display:none">
+      <h3>Progresso do Grupo</h3>
+      <div id="infoRevelar"></div>
+    </div>
+  
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script type="module" src="firebase/firebase-init.js"></script>
+<script type="module" src="js/revelar.js"></script>
+
+</body>
+</html>

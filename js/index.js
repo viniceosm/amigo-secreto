@@ -18,12 +18,17 @@ const btnCriar = document.getElementById("btnCriar");
 btnCriar.addEventListener("click", criarGrupo);
 
 async function criarGrupo() {
+  const btn = document.getElementById("btnCriar");
+  btn.textContent = "Criando grupo...";
+  btn.disabled = true;
 
   const nome = document.getElementById("grupo").value.trim();
   const lista = document.getElementById("participantes").value.trim();
 
   if (!nome || !lista) {
-    alert("Preencha todos os campos!");
+    await showAlert("Preencha todos os campos!");
+    btn.textContent = "Criar grupo 🎄";
+    btn.disabled = false;
     return;
   }
 
