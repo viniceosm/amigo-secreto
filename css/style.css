@@ -183,3 +183,22 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",syst
   0% { transform: scale(0.5); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
+
+.btn-danger {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #d63031;
+  color: #fff;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,.15);
+  transition: .2s;
+}
+
+.btn-danger:hover {
+  background: #b72828;
+}

@@ -64,9 +64,18 @@ if (!groupId) {
 init();
 
 async function init() {
+  console.log("init");
   const grupoSnap = await getDoc(doc(db, "amigo_grupos", groupId));
 
+  document.getElementById("btnExcluirGrupo").addEventListener("click", excluirGrupo);
+
   if (!grupoSnap.exists()) {
+    // Remover esse grupo da lista local
+    const grupos = loadLocalGroups(); // lista atual
+    const novaLista = grupos.filter(g => g.id !== groupId);
+
+    localStorage.setItem("amigoSecretoGrupos", JSON.stringify(novaLista));
+
     infoGrupo.innerHTML = "Grupo não encontrado.";
     return;
   }
@@ -78,6 +87,7 @@ async function init() {
   btnSortear.style.display = "block";
   btnSortear.addEventListener("click", () => sortear(grupo));
   btnResetar.addEventListener("click", resetarSorteio);
+  console.log("btnExcluirGrupo", btnExcluirGrupo);
 
   iniciarPainelProgresso(groupId, grupo.participantes);
 
@@ -315,6 +325,37 @@ async function resetarSorteio() {
   await showAlert("Sorteio resetado com sucesso!");
 }
 
+async function excluirGrupo() {
+
+  const ok = await showConfirm(`
+    Tem certeza que deseja <b>excluir este grupo</b>?<br><br>
+    ✔ Todos os links serão apagados<br>
+    ✔ O grupo deixará de existir<br><br>
+    Esta ação <b>não pode ser desfeita</b>.
+  `);
+
+  if (!ok) return;
+
+  // 1. Apagar todos os links associados
+  const q = query(
+    collection(db, "amigo_links"),
+    where("groupId", "==", groupId)
+  );
+
+  const snapshot = await getDocs(q);
+  for (const docSnap of snapshot.docs) {
+    await deleteDoc(docSnap.ref);
+  }
+
+  // 2. Apagar o grupo
+  await deleteDoc(doc(db, "amigo_grupos", groupId));
+
+  // 3. Avisar e redirecionar
+  await showAlert("Grupo excluído com sucesso!");
+
+  window.location.href = "index.html";
+}
+
 async function carregarLinksExistentes() {
   const q = query(
     collection(db, "amigo_links"),
@@ -383,3 +424,13 @@ window.compartilharLink = async function(pessoa, url) {
     `);
   }
 };
+
+function loadLocalGroups() {
+  return JSON.parse(localStorage.getItem("amigoSecretoGrupos") || "[]");
+}
+
+function saveLocalGroup(g) {
+  const list = loadLocalGroups();
+  list.push(g);
+  localStorage.setItem("amigoSecretoGrupos", JSON.stringify(list));
+}
