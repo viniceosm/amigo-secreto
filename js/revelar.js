@@ -70,7 +70,6 @@ async function init() {
 
     if (!salvoLocal) {
       // Outro dispositivo tentando usar um link já revelado
-      giftBoxWrapper.style.display = "none";
       document.getElementById("dicaArea").style.display = "none";
       document.getElementById("dicaRecebida").style.display = "none";
 
