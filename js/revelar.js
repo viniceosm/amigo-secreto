@@ -65,58 +65,58 @@ async function init() {
   const dados = snap.data();
 
   // ---------- CASO 1: link já foi usado ----------
-  if (dados.used) {
-    const salvoLocal = LOCAL_KEY ? localStorage.getItem(LOCAL_KEY) : null;
+  // if (dados.used) {
+  //   const salvoLocal = LOCAL_KEY ? localStorage.getItem(LOCAL_KEY) : null;
 
-    if (!salvoLocal) {
-      // Outro dispositivo tentando usar um link já revelado
-      document.getElementById("dicaArea").style.display = "none";
-      document.getElementById("dicaRecebida").style.display = "none";
+  //   if (!salvoLocal) {
+  //     // Outro dispositivo tentando usar um link já revelado
+  //     document.getElementById("dicaArea").style.display = "none";
+  //     document.getElementById("dicaRecebida").style.display = "none";
 
-      revealName.textContent =
-        "Este link já foi usado para revelar o amigo secreto. 🎄";
-      revealName.style.display = "block";
+  //     revealName.textContent =
+  //       "Este link já foi usado para revelar o amigo secreto. 🎄";
+  //     revealName.style.display = "block";
 
-      // Mesmo assim mostra o painel de progresso do grupo
-      iniciarPainel(dados.groupId);
-      return;
-    }
+  //     // Mesmo assim mostra o painel de progresso do grupo
+  //     iniciarPainel(dados.groupId);
+  //     return;
+  //   }
 
-    // Mesmo dispositivo que já revelou antes → pode ver de novo a partir do localStorage
-    const amigo = salvoLocal;
+  //   // Mesmo dispositivo que já revelou antes → pode ver de novo a partir do localStorage
+  //   const amigo = salvoLocal;
 
-    // Mostra nome
-    revealName.textContent = amigo;
-    revealName.style.display = "block";
+  //   // Mostra nome
+  //   revealName.textContent = amigo;
+  //   revealName.style.display = "block";
 
-    // Mostra caixa (sem impedir nada)
-    giftBoxWrapper.style.display = "flex";
+  //   // Mostra caixa (sem impedir nada)
+  //   giftBoxWrapper.style.display = "flex";
 
-    // Habilita área pra deixar dica
-    document.getElementById("dicaArea").style.display = "block";
+  //   // Habilita área pra deixar dica
+  //   document.getElementById("dicaArea").style.display = "block";
 
-    if (dados.dica) {
-      document.getElementById("dicaTexto").value = dados.dica;
-    }
+  //   if (dados.dica) {
+  //     document.getElementById("dicaTexto").value = dados.dica;
+  //   }
 
-    // Escutar dica do amigo revelado
-    iniciarDicaDoAmigo(amigo);
+  //   // Escutar dica do amigo revelado
+  //   iniciarDicaDoAmigo(amigo);
 
-    // Progresso do grupo
-    iniciarPainel(dados.groupId);
+  //   // Progresso do grupo
+  //   iniciarPainel(dados.groupId);
 
-    document.getElementById("btnSalvarDica").onclick = async () => {
-      const texto = document.getElementById("dicaTexto").value.trim();
+  //   document.getElementById("btnSalvarDica").onclick = async () => {
+  //     const texto = document.getElementById("dicaTexto").value.trim();
 
-      await updateDoc(linkRef, {
-        dica: texto
-      });
+  //     await updateDoc(linkRef, {
+  //       dica: texto
+  //     });
 
-      await showAlert("Dica salva com sucesso! 🎁");
-    };
+  //     await showAlert("Dica salva com sucesso! 🎁");
+  //   };
 
-    return;
-  }
+  //   return;
+  // }
 
   // ---------- CASO 2: link AINDA NÃO FOI usado ----------
   // Aqui é a primeira vez que alguém está abrindo esse link
