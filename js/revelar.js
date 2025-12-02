@@ -7,6 +7,8 @@ const params = new URLSearchParams(window.location.search);
 const token = params.get("t");
 const masterKey = params.get("k");
 
+const LOCAL_KEY = token ? `amigoRevelado_${token}` : null;
+
 const revealContainer = document.getElementById("revealContainer");
 const revealName = document.getElementById("revealName");
 const giftBoxWrapper = document.getElementById("giftBoxWrapper");
@@ -62,7 +64,71 @@ async function init() {
 
   const dados = snap.data();
 
+  // ---------- CASO 1: link já foi usado ----------
+  if (dados.used) {
+    const salvoLocal = LOCAL_KEY ? localStorage.getItem(LOCAL_KEY) : null;
+
+    if (!salvoLocal) {
+      // Outro dispositivo tentando usar um link já revelado
+      giftBoxWrapper.style.display = "none";
+      document.getElementById("dicaArea").style.display = "none";
+      document.getElementById("dicaRecebida").style.display = "none";
+
+      revealName.textContent =
+        "Este link já foi usado para revelar o amigo secreto. 🎄";
+      revealName.style.display = "block";
+
+      // Mesmo assim mostra o painel de progresso do grupo
+      iniciarPainel(dados.groupId);
+      return;
+    }
+
+    // Mesmo dispositivo que já revelou antes → pode ver de novo a partir do localStorage
+    const amigo = salvoLocal;
+
+    // Mostra nome
+    revealName.textContent = amigo;
+    revealName.style.display = "block";
+
+    // Mostra caixa (sem impedir nada)
+    giftBoxWrapper.style.display = "flex";
+
+    // Habilita área pra deixar dica
+    document.getElementById("dicaArea").style.display = "block";
+
+    if (dados.dica) {
+      document.getElementById("dicaTexto").value = dados.dica;
+    }
+
+    // Escutar dica do amigo revelado
+    iniciarDicaDoAmigo(amigo);
+
+    // Progresso do grupo
+    iniciarPainel(dados.groupId);
+
+    document.getElementById("btnSalvarDica").onclick = async () => {
+      const texto = document.getElementById("dicaTexto").value.trim();
+
+      await updateDoc(linkRef, {
+        dica: texto
+      });
+
+      await showAlert("Dica salva com sucesso! 🎁");
+    };
+
+    return;
+  }
+
+  // ---------- CASO 2: link AINDA NÃO FOI usado ----------
+  // Aqui é a primeira vez que alguém está abrindo esse link
+
+  // Decripta usando a masterKey salva no doc (não dependemos do k da URL)
   const amigo = await decryptAES(dados.masterKey, dados.assigned);
+
+  // Salva localmente para este dispositivo poder ver de novo depois
+  if (LOCAL_KEY) {
+    localStorage.setItem(LOCAL_KEY, amigo);
+  }
 
   document.getElementById("dicaArea").style.display = "block";
 
@@ -71,31 +137,52 @@ async function init() {
   revealName.style.display = "block";
 
   // Marca como usado se ainda não foi
-  if (!dados.used) {
-    await updateDoc(linkRef, {
-      used: true,
-      usedAt: new Date().toISOString()
-    });
+  await updateDoc(linkRef, {
+    used: true,
+    usedAt: new Date().toISOString()
+  });
 
-    // Atualiza o total de revelados do grupo
-    await updateDoc(doc(db, "amigo_grupos", dados.groupId), {
-      revelados: increment(1)
-    });
-  }
+  // Atualiza o total de revelados do grupo
+  await updateDoc(doc(db, "amigo_grupos", dados.groupId), {
+    revelados: increment(1)
+  });
 
   if (dados.dica) {
     document.getElementById("dicaTexto").value = dados.dica;
   }
 
-  // Busca a dica do amigo revelado
-  const q = query(
-    collection(db, "amigo_links"),
-    where("owner", "==", amigo)
-  );
+  // Escutar dica do amigo revelado
+  iniciarDicaDoAmigo(amigo);
 
-  const snapDica = await getDocs(q);
+  // Exibe caixa animada
+  giftBoxWrapper.style.display = "flex";
 
-  // ESCUTAR EM TEMPO REAL a dica do amigo revelado
+  // 🎉 Soltar confetes
+  confetti({
+    particleCount: 200,
+    spread: 80,
+    origin: { y: 0.2 }
+  });
+
+  // Atualiza painel de progresso do grupo
+  iniciarPainel(dados.groupId);
+
+  document.getElementById("btnSalvarDica").onclick = async () => {
+    const texto = document.getElementById("dicaTexto").value.trim();
+
+    await updateDoc(linkRef, {
+      dica: texto
+    });
+
+    await showAlert("Dica salva com sucesso! 🎁");
+  };
+}
+
+// Escutar em tempo real a dica do amigo revelado
+function iniciarDicaDoAmigo(amigo) {
+  const q = query(collection(db, "amigo_links"), where("owner", "==", amigo));
+
+   // ESCUTAR EM TEMPO REAL a dica do amigo revelado
   onSnapshot(q, (snapDica) => {
     const divRecebida = document.getElementById("dicaRecebida");
     const divTexto = document.getElementById("dicaTextoRecebida");
@@ -123,30 +210,6 @@ async function init() {
       divVazia.style.display = "block";
     }
   });
-
-  // Exibe caixa animada
-  giftBoxWrapper.style.display = "flex";
-
-  // 🎉 Soltar confetes
-  confetti({
-    particleCount: 200,
-    spread: 80,
-    origin: { y: 0.2 }
-  });
-
-  // Atualiza progresso do grupo
-  iniciarPainel(dados.groupId);
-
-  document.getElementById("btnSalvarDica").onclick = async () => {
-
-    const texto = document.getElementById("dicaTexto").value.trim();
-  
-    await updateDoc(linkRef, {
-      dica: texto
-    });
-  
-    await showAlert("Dica salva com sucesso! 🎁");
-  };
 }
 
 function iniciarPainel(groupId) {
