@@ -51,6 +51,7 @@ async function init() {
 
   if (!token || !masterKey) {
     revealName.textContent = "Link inválido.";
+    revealName.style.display = "block";
     return;
   }
 
@@ -58,7 +59,8 @@ async function init() {
   const snap = await getDoc(linkRef);
 
   if (!snap.exists()) {
-    revealName.textContent = "Link não encontrado.";
+    revealName.textContent = "Link não encontrado. Provavelmente o grupo foi apagado.";
+    revealName.style.display = "block";
     return;
   }
 
