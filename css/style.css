@@ -225,3 +225,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",syst
   color: #d83939;
   font-weight: 700;
 }
+
+.btn-loading {
+  opacity: 0.7;
+  pointer-events: none;
+}

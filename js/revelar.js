@@ -106,13 +106,34 @@ async function init() {
     iniciarPainel(dados.groupId);
 
     document.getElementById("btnSalvarDica").onclick = async () => {
+      const btn = document.getElementById("btnSalvarDica");
       const texto = document.getElementById("dicaTexto").value.trim();
 
-      await updateDoc(linkRef, {
-        dica: texto
-      });
+      if (texto === "") {
+        await showAlert("Digite sua dica antes de salvar!");
+        return;
+      }
 
-      await showAlert("Dica salva com sucesso! 🎁");
+      // Estado "salvando"
+      btn.textContent = "Salvando dica...";
+      btn.classList.add("btn-loading");
+      btn.disabled = true;
+
+      try {
+        await updateDoc(linkRef, {
+          dica: texto
+        });
+
+        await showAlert("Dica salva com sucesso! 🎁");
+      } catch (error) {
+        console.error(error);
+        await showAlert("Erro ao salvar a dica, tente novamente.");
+      }
+
+      // Volta ao estado normal
+      btn.textContent = "Salvar dica";
+      btn.classList.remove("btn-loading");
+      btn.disabled = false;
     };
 
     return;
