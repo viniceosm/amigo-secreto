@@ -151,7 +151,7 @@ async function init() {
   }
 
   // Escutar dica do amigo revelado
-  iniciarDicaDoAmigo(amigo);
+  iniciarDicaDoAmigo(amigo, dados.groupId);
 
   // Exibe caixa animada
   giftBoxWrapper.style.display = "flex";
@@ -178,7 +178,7 @@ async function init() {
 }
 
 // Escutar em tempo real a dica do amigo revelado
-function iniciarDicaDoAmigo(amigo) {
+function iniciarDicaDoAmigo(amigo, groupId) {
   const q = query(
     collection(db, "amigo_links"),
     where("owner", "==", amigo),
